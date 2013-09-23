@@ -12,7 +12,7 @@ import edu.iastate.cs331.common.IGraph;
  * @param <E>
  * 				The data type held in this graph
  */
-public class Graph<E> implements IGraph<E> {
+public class DirectedGraph<E> implements IGraph<E> {
 
 	private Map<E, GNode> nodes;
 	
@@ -28,6 +28,11 @@ public class Graph<E> implements IGraph<E> {
 		public String toString() {
 			// TODO
 			return null;
+		}
+		
+		@Override
+		public int hashCode() {
+			return data.hashCode();
 		}
 		
 		public String dataToString() {
