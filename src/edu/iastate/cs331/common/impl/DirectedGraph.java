@@ -1,5 +1,6 @@
 package edu.iastate.cs331.common.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import edu.iastate.cs331.common.IGraph;
 public class DirectedGraph<E> implements IGraph<E> {
 
 	private Map<E, GNode> nodes;
+	private int size;
 	
 	private class GNode {
 		public E data;
@@ -40,10 +42,19 @@ public class DirectedGraph<E> implements IGraph<E> {
 		}
 	}
 	
+	public DirectedGraph() {
+		this.nodes = new HashMap<E, GNode>();
+		this.size = 0;
+	}
+	
 	@Override
 	public boolean addData(E data) {
-		// TODO Auto-generated method stub
-		return false;
+		if (nodes.containsKey(data)) {
+			return false;
+		}
+		GNode n = new GNode(data);
+		nodes.put(data, n);
+		return true;
 	}
 
 	@Override
