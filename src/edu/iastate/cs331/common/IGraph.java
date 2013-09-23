@@ -8,6 +8,7 @@ package edu.iastate.cs331.common;
  * 				The generic type of data to be added to the graph 				
  */
 public interface IGraph<E> {
+	public static final String NODE_DELIMIT = ",";
 	
 	/**
 	 * Adds the given data to the graph, leaving it unconnected. If the data
