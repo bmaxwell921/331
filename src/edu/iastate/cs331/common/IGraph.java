@@ -4,12 +4,10 @@ package edu.iastate.cs331.common;
  * An interface representing behaviors for graph datastructures
  * @author brandon
  *
- * @param <D>
- * 				The generic type of data to be added to the graph
  * @param <E>
- * 				
+ * 				The generic type of data to be added to the graph 				
  */
-public interface IGraph<D> {
+public interface IGraph<E> {
 	
 	/**
 	 * Adds the given data to the graph, leaving it unconnected. If the data
@@ -20,21 +18,34 @@ public interface IGraph<D> {
 	 * @return
 	 * 			True or false based on whether the data was added to the graph or not
 	 */
-	public boolean addData(D data);
+	public boolean addData(E data);
 	
 	/**
 	 * Adds an edge from one data point to another. If either of the data points
-	 * did not exist before this method was called, they will be created and added.
-	 * If an edge already existed between from from to to, this method will return false.
+	 * do not exist, the method will return false and exit.
 	 * @param from
 	 * @param to
 	 * @return
 	 */
-	public boolean addEdge(D from, D to);
+	public boolean addEdge(E from, E to);
 	
+	/**
+	 * Returns the number of nodes in the graph
+	 * @return
+	 */
 	public int size();
 	
+	/**
+	 * Returns the string representation of the nodes in the graph, following
+	 * the depth first order
+	 * @return
+	 */
 	public String toStringDfs();
 	
+	/**
+	 * Returns the string representation of the nodes in the graph, following
+	 * the breadth first order
+	 * @return
+	 */
 	public String toStringBfs();
 }

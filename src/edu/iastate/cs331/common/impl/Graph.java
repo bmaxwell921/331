@@ -9,18 +9,18 @@ import edu.iastate.cs331.common.IGraph;
  * Concrete implementation of the IGraph interface
  * @author brandon
  *
- * @param <D>
+ * @param <E>
  * 				The data type held in this graph
  */
-public class Graph<D> implements IGraph<D> {
+public class Graph<E> implements IGraph<E> {
 
-	private Map<D, GNode> nodes;
+	private Map<E, GNode> nodes;
 	
 	private class GNode {
-		public D data;
+		public E data;
 		public Set<GNode> neighbors;
 		
-		public GNode(D data) {
+		public GNode(E data) {
 			this.data = data;
 		}
 		
@@ -36,13 +36,13 @@ public class Graph<D> implements IGraph<D> {
 	}
 	
 	@Override
-	public boolean addData(D data) {
+	public boolean addData(E data) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean addEdge(D from, D to) {
+	public boolean addEdge(E from, E to) {
 		// TODO Auto-generated method stub
 		return false;
 	}
