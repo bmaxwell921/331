@@ -1,17 +1,17 @@
 package edu.iastate.cs331.finiteAutomata.exceptions;
 
-public class StateNotFoundException extends RuntimeException {
+public class StateNotDefinedException extends RuntimeException {
 
 	/**
 	 * Intial version
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public StateNotFoundException() {
+	public StateNotDefinedException() {
 		super();
 	}
 	
-	public StateNotFoundException(String message) {
+	public StateNotDefinedException(String message) {
 		super(message);
 	}
 }

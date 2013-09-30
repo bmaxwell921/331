@@ -28,7 +28,7 @@ public interface IFiniteAutomata {
 	 * unlinked from any other states.
 	 * @param sid
 	 * 				The name for the new state
-	 * @throws StateNoFoundException
+	 * @throws StateNotDefinedException
 	 * 					if the state with the given identification can't be found
 	 */
 	public void addState(StateIdentification sid);
@@ -55,7 +55,7 @@ public interface IFiniteAutomata {
 	 * 					the character in the alphabet linking the two states.
 	 * @throws NotInAlphabetException
 	 * 					if the transition is not in this finite automata's alphabet
-	 * @throws StateNoFoundException
+	 * @throws StateNotDefinedException
 	 * 					if either state with the given identifications can't be found
 	 */
 	public void addTransition(StateIdentification fsid, StateIdentification tsid, AlphabetChar transition);
@@ -67,7 +67,7 @@ public interface IFiniteAutomata {
 	 * 
 	 * @param sid
 	 * 				The name of the state to be removed
-	 * @throws StateNoFoundException
+	 * @throws StateNotDefinedException
 	 * 					if the state with the given identification can't be found
 	 */
 	public void removeState(StateIdentification sid);
@@ -79,7 +79,7 @@ public interface IFiniteAutomata {
 	 * Returns false if the transition doesn't exist
 	 * @param fsid
 	 * @param transition
-	 * @throws StateNoFoundException
+	 * @throws StateNotDefinedException
 	 * 					if the state with the given identification can't be found
 	 * @throws TransitionNotDefinedException
 	 * 					if the the given state doesn't define a transition for the given AlphabetChar
@@ -120,7 +120,7 @@ public interface IFiniteAutomata {
 	/**
 	 * Sets the state with the given state identification as accepting
 	 * @param acceptingSid
-	 * @throws StateNotFoundException
+	 * @throws StateNotDefinedException
 	 * 					if the state with the given identification can't be found
 	 */
 	public void setAccepting(StateIdentification acceptingSid);
@@ -128,7 +128,7 @@ public interface IFiniteAutomata {
 	/**
 	 * Sets the state with the given state identification as accepting
 	 * @param startingSid
-	 * @throws StateNotFoundException
+	 * @throws StateNotDefinedException
 	 * 				if the state with the given identification can't be found
 	 */
 	public void setStarting(StateIdentification startingSid);

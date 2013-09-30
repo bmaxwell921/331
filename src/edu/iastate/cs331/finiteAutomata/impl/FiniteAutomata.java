@@ -41,6 +41,11 @@ public abstract class FiniteAutomata implements IFiniteAutomata {
 		return stateCount == 0 && transitionCount == 0;
 	}
 	
+	/**
+	 * Class representing a state in the finite automata. States have directed transitions coming out of them
+	 * @author Brandon
+	 *
+	 */
 	protected class State {
 		public StateIdentification sid;
 		public Map<AlphabetChar, State> transitions;
