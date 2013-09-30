@@ -28,8 +28,8 @@ public interface IFiniteAutomata {
 	 * unlinked from any other states.
 	 * @param sid
 	 * 				The name for the new state
-	 * @throws StateNotDefinedException
-	 * 					if the state with the given identification can't be found
+	 * @throws StateAlreadyDefinedExcpetion
+	 * 					if the state with the given identification already exists
 	 */
 	public void addState(StateIdentification sid);
 	

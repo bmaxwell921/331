@@ -1,11 +1,16 @@
 package edu.iastate.cs331.finiteAutomata.impl;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import edu.iastate.cs331.finiteAutomata.IFiniteAutomata;
 import edu.iastate.cs331.finiteAutomata.exceptions.NonEmptyFiniteAutomataException;
 import edu.iastate.cs331.finiteAutomata.exceptions.NotInAlphabetException;
+import edu.iastate.cs331.finiteAutomata.exceptions.StateAlreadyDefinedException;
+import edu.iastate.cs331.finiteAutomata.exceptions.StateNotDefinedException;
+import edu.iastate.cs331.finiteAutomata.exceptions.TransitionAlreadyDefinedException;
 import edu.iastate.cs331.finiteAutomata.exceptions.TransitionNotDefinedException;
 import edu.iatate.cs331.finiteAutomata.common.Alphabet;
 import edu.iatate.cs331.finiteAutomata.common.AlphabetChar;
@@ -18,12 +23,57 @@ public abstract class FiniteAutomata implements IFiniteAutomata {
 	
 	private Alphabet alphabet;
 	
+	// All the states in the finite automata, used to check uniqueness
+	protected Map<StateIdentification, State> allStates;
+	
+	/*
+	 *  The initial state(s) for the finite automata. Serves as a starting point
+	 *  for evaluating acceptance.
+	 */
+	protected Set<State> initialStates;
+	
 	public FiniteAutomata(Alphabet alphabet) {
 		stateCount = 0;
 		transitionCount = 0;
 		
 		this.alphabet = alphabet;
+		allStates = new HashMap<StateIdentification, State>();
+		initialStates = new HashSet<State>();
 	}
+	
+	@Override
+	public void addState(StateIdentification sid) {
+		if (allStates.containsKey(sid)) throw new StateAlreadyDefinedException();
+		protAddState(sid);
+	}
+	
+	protected abstract void protAddState(StateIdentification sid);
+	
+	@Override
+	public void addTransition(StateIdentification fsid, StateIdentification tsid, AlphabetChar transition) {
+		if (!allStates.containsKey(fsid) || !allStates.containsKey(tsid)) throw new StateNotDefinedException();
+		if (!alphabet.containsChar(transition)) throw new NotInAlphabetException();
+		protAddTransition(fsid, tsid, transition);
+	}
+	
+	protected abstract void protAddTransition(StateIdentification fsid, StateIdentification tsid, AlphabetChar transition);
+	
+	@Override
+	public void removeState(StateIdentification sid) {
+		if (!allStates.containsKey(sid)) throw new StateNotDefinedException();
+		protRemoveState(sid);
+	}
+	
+	protected abstract void protRemoveState(StateIdentification sid);
+	
+	@Override
+	public void removeTransition(StateIdentification sid, AlphabetChar transition) {
+		if (!allStates.containsKey(sid)) throw new StateNotDefinedException();
+		if (!alphabet.containsChar(transition)) throw new NotInAlphabetException();
+		protRemoveTransition(sid, transition);
+	}
+	
+	protected abstract void protRemoveTransition(StateIdentification sid, AlphabetChar transition);
 	
 	@Override
 	public void setAlphabet(Alphabet alphabet) {
@@ -58,8 +108,8 @@ public abstract class FiniteAutomata implements IFiniteAutomata {
 		}
 		
 		public void addTransition(State to, AlphabetChar c) {
-			if (!alphabet.containsChar(c)) throw new NotInAlphabetException("Given AlphabetChar: " + c 
-					+ " didn't exist in the alphabet.");
+			if (transitions.containsKey(c)) throw new TransitionAlreadyDefinedException("State: " + sid 
+					+ " already defines a transition for AlphabetChar: " + c);
 			transitions.put(c, to);
 		}
 		
