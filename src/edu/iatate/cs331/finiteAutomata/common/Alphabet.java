@@ -18,6 +18,8 @@ public class Alphabet {
 	
 	private Set<AlphabetChar> chars;
 	
+	private static final String NULL_CHAR_MESSAGE = "Give AlphabetChar was null.";
+	
 	public Alphabet() {
 		chars = new HashSet<AlphabetChar>();
 	}
@@ -42,7 +44,7 @@ public class Alphabet {
 	 * @param newChar
 	 */
 	public void addAlphabetChar(AlphabetChar newChar) {
-		if (newChar == null) throw new NullPointerException("Given AlphabetChar was null.");
+		if (newChar == null) throw new NullPointerException(NULL_CHAR_MESSAGE);
 		chars.add(newChar);
 	}
 	
@@ -53,7 +55,7 @@ public class Alphabet {
 	 * @param remChar
 	 */
 	public void removeAlphabetChar(AlphabetChar remChar) {
-		if (remChar == null) throw new NullPointerException("Give AlphabetChar was null.");
+		if (remChar == null) throw new NullPointerException(NULL_CHAR_MESSAGE);
 		chars.remove(remChar);
 	}
 	

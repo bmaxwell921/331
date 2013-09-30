@@ -1,68 +1,67 @@
 package edu.iastate.cs331.finiteAutomata.impl;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.iastate.cs331.finiteAutomata.IFiniteAutomata;
+import edu.iastate.cs331.finiteAutomata.exceptions.NonEmptyFiniteAutomataException;
+import edu.iastate.cs331.finiteAutomata.exceptions.NotInAlphabetException;
+import edu.iastate.cs331.finiteAutomata.exceptions.TransitionNotDefinedException;
 import edu.iatate.cs331.finiteAutomata.common.Alphabet;
 import edu.iatate.cs331.finiteAutomata.common.AlphabetChar;
 import edu.iatate.cs331.finiteAutomata.common.StateIdentification;
 
-public class FiniteAutomata implements IFiniteAutomata {
-
-	@Override
-	public Alphabet getAlphabet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addState(StateIdentification sid) {
-		// TODO Auto-generated method stub
+public abstract class FiniteAutomata implements IFiniteAutomata {
+	
+	private int stateCount;
+	private int transitionCount;
+	
+	private Alphabet alphabet;
+	
+	public FiniteAutomata(Alphabet alphabet) {
+		stateCount = 0;
+		transitionCount = 0;
 		
-	}
-
-	@Override
-	public boolean addTransition(StateIdentification fsid,
-			StateIdentification tsid, AlphabetChar transition) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeState(StateIdentification sid) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeTransition(StateIdentification fsid,
-			AlphabetChar transition) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void clearFiniteAutomata() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean setAlphabet(Alphabet alphabet) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean accepts(List<AlphabetChar> sequence) {
-		// TODO Auto-generated method stub
-		return false;
+		this.alphabet = alphabet;
 	}
 	
+	@Override
+	public void setAlphabet(Alphabet alphabet) {
+		if (!isEmpty()) throw new NonEmptyFiniteAutomataException();
+		this.alphabet = alphabet;
+	}
+	
+	@Override
+	public Alphabet getAlphabet() {
+		return alphabet;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return stateCount == 0 && transitionCount == 0;
+	}
+	
+	protected class State {
+		public StateIdentification sid;
+		public Map<AlphabetChar, State> transitions;
+		public boolean isAccepting;
+		
+		public State(StateIdentification sid, boolean isAccepting) {
+			this.sid = sid;
+			this.isAccepting = isAccepting;
+			this.transitions = new HashMap<AlphabetChar, State>();
+		}
+		
+		public void addTransition(State to, AlphabetChar c) {
+			if (!alphabet.containsChar(c)) throw new NotInAlphabetException("Given AlphabetChar: " + c 
+					+ " didn't exist in the alphabet.");
+			transitions.put(c, to);
+		}
+		
+		public void removeTransition(AlphabetChar c) {
+			if (!transitions.containsKey(c)) throw new TransitionNotDefinedException("State: " + sid 
+					+ " doesn't define a transition for: " + c);
+			transitions.remove(c);
+		}
+	}
 }

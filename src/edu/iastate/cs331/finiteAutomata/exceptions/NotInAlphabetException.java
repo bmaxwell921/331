@@ -8,9 +8,9 @@ package edu.iastate.cs331.finiteAutomata.exceptions;
 public class NotInAlphabetException extends RuntimeException {
 
 	/**
-	 * Generated
+	 * Initial version
 	 */
-	private static final long serialVersionUID = -6482742558342193307L;
+	private static final long serialVersionUID = 1L;
 
 	public NotInAlphabetException() {
 		super();
