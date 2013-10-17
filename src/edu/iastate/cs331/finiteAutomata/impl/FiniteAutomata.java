@@ -187,5 +187,7 @@ public abstract class FiniteAutomata implements IFiniteAutomata {
 		public abstract void removeTransition(AlphabetChar c);
 		
 		public abstract boolean containsTransition(State to, AlphabetChar c);
+		
+		public abstract boolean containsTransition(AlphabetChar c);
 	}
 }

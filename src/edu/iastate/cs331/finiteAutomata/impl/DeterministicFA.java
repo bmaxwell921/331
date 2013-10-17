@@ -31,17 +31,44 @@ public class DeterministicFA extends FiniteAutomata {
 
 	@Override
 	public boolean accepts(List<AlphabetChar> sequence) {
+		if (sequence == null) return false;
 		// TODO
 		/*
 		 * Check if the DFA is fully defined -> every state needs to have
 		 * transitions for every alphabet character.
 		 */
-		return false;
+		if (!isFullyDefined()) throw new NotFullyDefinedDFAException();
+		
+		/*
+		 * We have just one location that we're looking at at a time. Upon reading
+		 * a character, follow the link to the next node. Once we get to the end of
+		 * the sequence return whether we're in an accepting state or not
+		 */
+		// Start at the start
+		DFAState cur = (DFAState) super.startStates.iterator().next();
+		
+		for (AlphabetChar c : sequence) {
+			cur = (DFAState) cur.transitions.get(c);
+		}
+		
+		return super.acceptStates.contains(cur);
 	}
 	
 	private boolean isFullyDefined() {
-		//TODO
-		return false;
+		/*
+		 * Check that every state in the DFA has transitions for 
+		 * every character in the alphabet.
+		 */
+		for (StateIdentification curId : super.allStates.keySet()) {
+			State cur = super.allStates.get(curId);
+			for (AlphabetChar ch : super.getAlphabet()) {
+				if (!cur.containsTransition(ch)) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
 	}
 
 	@Override
@@ -57,7 +84,7 @@ public class DeterministicFA extends FiniteAutomata {
 	 * 
 	 */
 	private class DFAState extends State {
-		private Map<AlphabetChar, State> transitions;
+		public Map<AlphabetChar, State> transitions;
 
 		public DFAState(StateIdentification sid) {
 			super(sid);
@@ -87,7 +114,11 @@ public class DeterministicFA extends FiniteAutomata {
 				return false;
 			return transitions.get(c).equals(to);
 		}
-
+		
+		@Override
+		public boolean containsTransition(AlphabetChar c) {
+			return transitions.containsKey(c);
+		}
 	}
 
 }

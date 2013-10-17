@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
  *
  * @param <Chars>
  */
-public class Alphabet {
+public class Alphabet implements Iterable<AlphabetChar> {
 	
 	private Set<AlphabetChar> chars;
 	
@@ -92,5 +93,10 @@ public class Alphabet {
 		List<AlphabetChar> ordered = new ArrayList<AlphabetChar>(chars);
 		Collections.sort(ordered);
 		return ordered.toString();
+	}
+
+	@Override
+	public Iterator<AlphabetChar> iterator() {
+		return (chars == null) ? null : chars.iterator();
 	}
 }
